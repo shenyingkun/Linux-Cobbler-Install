@@ -3,10 +3,15 @@
 ## 一．检查系统环境
 
 [root@cobbler ~]# getenforce 检查SELINUX
+
 [root@cobbler ~]# /etc/init.d/iptables status 关闭防火墙
+
 挂载iso镜像制作yum源
+
 echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/CentOS/" >>/etc/rc.local
+
 echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/cdrom/" >>/etc/rc.local
+
 ## 二．安装cobbler
 
 安装服务
