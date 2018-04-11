@@ -1,13 +1,12 @@
-Cobbler 部署安装Centos 6.9（例）
-===
-一．检查系统环境 
----
+#Cobbler 部署安装Centos 6.9（例）
+##一．检查系统环境 
+
 [root@cobbler ~]# getenforce 检查SELINUX
 [root@cobbler ~]# /etc/init.d/iptables status 关闭防火墙
 挂载iso镜像制作yum源
 echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/CentOS/" >>/etc/rc.local 
 echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/cdrom/" >>/etc/rc.local
-二．安装cobbler
+##二．安装cobbler
 ---
 安装服务
 [root@cobbler ~]# yum install pykickstart httpd dhcp tftp-server –y
@@ -23,7 +22,7 @@ httpd: Could not reliably determine the server's fully qualified domain name, us
 #遇见报错需要修改apache的配置文件，添加一行
 [root@cobbler cobbler]# vim /etc/httpd/conf/httpd.conf  
 ServerName localhost:80
-三．修改程序参数
+##三．修改程序参数
 检查cobbler安装环境
 [root@cobbler ~]# cobbler check
 (1)修改cobbler参数
@@ -60,7 +59,7 @@ sed -i s/'default_password_crypted:.*'/'default_password_crypted: "$1$renjunji$G
 用cobbler管理DHCP，修改242行manage_dhcp: 0
 sed -i 's/manage_dhcp: 0/manage_dhcp: 1/g' /etc/cobbler/settings
 sed -i 's/pxe_just_once: 0/pxe_just_once: 1/' /etc/cobbler/settings
-四．配置DHCP
+##四．配置DHCP
 [root@linux-node1 ~]# vim /etc/cobbler/dhcp.template
 subnet 192.168.64.0 netmask 255.255.255.0 {  
 option domain-name-servers 223.5.5.5; 
@@ -73,12 +72,12 @@ next-server 192.168.64.131;
 filename "pxelinux.0";
 }
 [root@cobbler cobbler]# cobbler sync
-五．开机启动
+##五．开机启动
 echo "/etc/init.d/httpd restart" >>/etc/rc.local 
 echo "/etc/init.d/xinetd restart" >>/etc/rc.local      
 echo "/etc/init.d/cobblerd restart" >>/etc/rc.local       
 echo "/etc/init.d/dhcpd restart" >>/etc/rc.local 
-六．导入镜像
+##六．导入镜像
 [root@cobbler ~]# cobbler import --path=/mnt/ --name=CentOS-6.9-x86_64 --arch=x86_64
 七．查看镜像列表
 [root@cobbler ~]# cobbler distro list
@@ -87,11 +86,11 @@ echo "/etc/init.d/dhcpd restart" >>/etc/rc.local
 Centos 默认关联文件sample_end.ks ，修改/var/lib/cobbler/kickstarts/sample_end.ks
 
 
-Cobbler 部署安装Ubuntu14（例）
-一.导入镜像
+#Cobbler 部署安装Ubuntu14（例）
+##一.导入镜像
 [root@cobbler ~]# cobbler import --path=/mnt/ --name=Ubuntu14 --arch=x86_64
 echo " mount -o loop lubuntu-14.04-alternate-amd64.iso /mnt/cdrom1/" >>/etc/rc.local
-二.查看镜像列表
+##二.查看镜像列表
 [root@cobbler ~]# cobbler distro list
 [root@cobbler ~]# cobbler sync
 [root@cobbler kickstarts]# cobbler profile report --name= Ubuntu14-x86_64
@@ -101,22 +100,22 @@ openssl passwd -1 -salt 'admin@administrator' 'thinker'  生成密码
 /var/lib/cobbler/kickstarts/sample.seed 修改文件
 d-i passwd/root-password-crypted password $1$renjunji$G7LpR5255qFguHrw7E0KP/
 Ubuntu支持alternate版本ISO镜像
-Cobbler 部署安装Esxi5.1（例）
-一．导入镜像
+
+#Cobbler 部署安装Esxi5.1（例）
+##一．导入镜像
 [root@cobbler ~]# cobbler import --path=/mnt/ --name=Esxi5.1 --arch=x86_64
 echo " mount -o loop lubuntu-14.04-alternate-amd64.iso /mnt/cdrom1/" >>/etc/rc.local
-二．查看镜像列表
+##二．查看镜像列表
 [root@cobbler ~]# cobbler distro list
 [root@cobbler ~]# cobbler sync
 [root@cobbler kickstarts]# cobbler profile report --name= Ubuntu14-x86_64
 Esxi5默认关联文件sample_esxi5.ks，修改文件/var/lib/cobbler/kickstarts/sample_esxi5.ks
 
-Cobbler 部署安装红帽6.4（例）
-
-一．导入镜像
+#Cobbler 部署安装红帽6.4（例）
+##一．导入镜像
 [root@cobbler ~]# cobbler import --path=/mnt/ --name=Esxi5.1 --arch=x86_64
 echo " mount -o loop Red\ Hat\ Enterprise\ 6.5\ x86_64.iso /mnt/cdrom3/" >>/etc/rc.local
-二．查看镜像列表
+##二．查看镜像列表
 [root@cobbler ~]# cobbler distro list
 [root@cobbler ~]# cobbler sync
 [root@cobbler kickstarts]# cobbler profile report --name= Ubuntu14-x86_64
