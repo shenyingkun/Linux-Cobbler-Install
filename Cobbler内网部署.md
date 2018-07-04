@@ -8,15 +8,17 @@
 
 挂载iso镜像制作yum源
 
-    echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/CentOS/" >>/etc/rc.local
-
     echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/cdrom/" >>/etc/rc.local
 
 ## 二．安装cobbler
 
 安装服务
 
-    [root@cobbler ~]# yum install pykickstart httpd dhcp tftp-server –y
+    [root@cobbler ~]# yum -y install pykickstart httpd dhcp tftp-server mod_wsgi createrepo python-cheetah python-netaddr python-simplejson PyYAML syslinux genisoimage patch perl-Digest-SHA perl-Compress-Zlib perl-libwww-perl
+     
+     rpm -ivh Django14-1.4.20-1.el6.noarch.rpm
+     rpm -ivh Django14-1.4.20-1.el6.src.rpm
+     rpm -ivh Django14-doc-1.4.20-1.el6.noarch.rpm
 
 安装cobbler程序 (注意：安装python依赖包)
 
@@ -156,7 +158,7 @@
 
 ## 六．导入镜像
 
-    [root@cobbler ~]# cobbler import --path=/mnt/ --name=CentOS-6.9-x86_64 --arch=x86_64
+    [root@cobbler ~]# cobbler import --path=/mnt/cdrom --name=CentOS-6.9-x86_64 --arch=x86_64
 
 ## 七．查看镜像列表
 
