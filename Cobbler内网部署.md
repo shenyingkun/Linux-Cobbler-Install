@@ -1,12 +1,12 @@
 # Cobbler 部署安装Centos 6.9（例）
 ## 一．检查系统环境
-    [root@cobbler ~]# getenforce 检查SELINUX
-    [root@cobbler ~]# setenforce 0 关闭SELINUX 
-    [root@cobbler ~]# /etc/init.d/iptables stop 关闭防火墙
-    [root@cobbler ~]# chkconfig iptables off 设置防火墙不开机启动
-    [root@cobbler ~]# echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/cdrom/" >>/etc/rc.local 挂载iso镜像制作yum源，配置源
+    [root@cobbler ~]# getenforce # 检查SELINUX
+    [root@cobbler ~]# setenforce 0 # 关闭SELINUX 
+    [root@cobbler ~]# /etc/init.d/iptables stop # 关闭防火墙
+    [root@cobbler ~]# chkconfig iptables off # 设置防火墙不开机启动
+    [root@cobbler ~]# echo "mount -o loop CentOS-6.9-x86_64-bin-DVD1.iso /mnt/cdrom/" >>/etc/rc.local # 挂载iso镜像制作yum源，配置源
 ## 二．安装cobbler
-    [root@cobbler ~]# yum install -y mod_wsgi createrepo python-cheetah python-simplejson PyYAML syslinux genisoimage mod_ssl 安装依赖服务
+    [root@cobbler ~]# yum install -y mod_wsgi createrepo python-cheetah python-simplejson PyYAML syslinux genisoimage mod_ssl ## 安装依赖服务
     [root@cobbler ~]# rpm –ivh cobbler-2.6.11-1.el6.x86_64.rpm ## 安装cobbler主程序，注意先后顺序
     [root@cobbler ~]# rpm -ivh Django14-1.4.20-1.el6.noarch.rpm ## 依赖包
     [root@cobbler ~]# rpm -ivh Django14-1.4.20-1.el6.src.rpm ## 依赖包
